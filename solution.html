@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/favicon.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- If using an external CSS file, uncomment the line below and replace 'styles.css' with your file name -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>Rx&tx</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            --i: var(--wide, 1);
+            --j: calc(1 - var(--i));
+            overflow-x: hidden;
+            height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/2017/kreator_rockharz_july_2018.jpg) 50%/ cover;
+            font: 400 1em/ 1.25 koho, trebuchet ms, verdana, century gothic, arial, sans-serif;
+            @media (max-width: 39em) {
+                --wide: 0
+            }
+            @media (max-width: 15em) {
+                font-size: .75em
+            }
+        }
+        
+        article {
+            --p: var(--parity, 1);
+            --q: calc(1 - var(--p));
+            --s: calc(1 - 2*var(--p));
+            display: grid;
+            grid-template: calc(var(--j)*3.75em) 2.5em 1fr/ calc(var(--i)*(13.5em) + var(--j)*(13.5em)) 1fr calc(var(--i)*(13.5em) + var(--j)*(13.5em));
+            overflow: hidden;
+            margin: 1em auto;
+            max-width: 39em;
+            min-height: 10em;
+            border-radius: calc(var(--i)*10em);
+            box-shadow: 15px 15px 17px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(#f0f0f0, #fafafa 2.5em, #eaeaea 0, #dadada) 0 100%/ 100% calc(100% - var(--j)*3.75em);
+            counter-increment: idx;
+            &:before,
+             :after {
+                --m: 0;
+                box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.65);
+                transform-origin: calc(var(--p)*100%) calc((1 - var(--m))*100%);
+                transform: skewx(calc(var(--i)*var(--s)*(1 - 2*var(--m))*27deg));
+                background: linear-gradient(calc(var(--s)*(1 - 2*var(--m))*90deg), HSL(var(--hsl0)), HSL(var(--hsl1)));
+                content: '';
+            }
+            &:before,
+            h2 {
+                grid-row: 1/ calc(3 + 2*var(--i));
+                grid-column: calc(1 + 2*var(--i)*var(--p))/ span calc(1 + 2*var(--j));
+            }
+            /* &:after {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                grid-row: 2/ 3;
+                grid-column: calc(3 - 2*var(--i)*var(--p))/ span 1;
+                font-size: calc(var(--i)*0.3125em + var(--j)*1.25vw);
+                content: attr(data-icon);
+            } */
+            &:nth-of-type(odd) {
+                --parity: 0
+            }
+        }
+        
+        h2 {
+            display: grid;
+            grid-template: repeat(calc(var(--i) + 1), 2em) / repeat(calc(var(--j) + 1), 3.5em);
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            padding: calc(var(--i) * 0.875em) calc(var(--i) * var(--q) * 0.4375em - 0.2em * 10em) 0 calc(var(--i) * var(--p) * 0.4375em - 0.2em * 10em);
+            padding-top: 1em;
+            color: #fff;
+            font-size: 1em;
+            /* Adjust the font size as needed */
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+        
+        h2:before {
+            font-size: calc(var(--i) * 2em + 1em);
+            font-weight: 500;
+            content: counter(idx, decimal-leading-zero);
+        }
+        
+        h2:after {
+            --m: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        h4 {
+            padding: var(--pv, 0) calc(var(--i)*1.75rem + var(--j)*2vw);
+        }
+        
+        h4 {
+            grid-row: 2/ 3;
+            grid-column: calc(1 + var(--i))/ 3;
+            align-self: self-end;
+            color: HSL(var(--hsl1));
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            &:before {
+                white-space: pre;
+                font-weight: 500;
+                content: 'delicious\A'
+            }
+        }
+        
+        h6 {
+            --pv: 0.5em;
+            grid-row: 3/4;
+            grid-column: calc(1 + var(--i))/ calc(3 + var(--j));
+            &:before {
+                display: block;
+                margin-bottom: 0.5em;
+                width: 1.em;
+                height: 0.75em;
+                box-shadow: 2*0.75em 0 rgba(255, 255, 255, 0.8), 4*0.75em 0 rgba(255, 255, 255, 0.6), 6*0.75em 0 rgba(255, 255, 255, 0.4), 8*0.75em 0 rgba(255, 255, 255, 0.2);
+                background: HSL(var(--hsl1));
+                border-radius: 50%;
+                font-size: 0.25rem'';
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <!-- <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Startup</h1> -->
+                <img src="./img/logo12-removebg-preview.png" height="100px" width="150px"> </a>
+
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link ">About</a>
+                    <a href="service.html" class="nav-item nav-link">Services</a>
+                    <a href="solution.html" class="nav-item nav-link active">Solutions</a>
+
+                    <!-- <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
+                            <a href="detail.html" class="dropdown-item">Blog Detail</a>
+                        </div>
+                    </div> -->
+                    <!-- <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="price.html" class="dropdown-item">Pricing Plan</a>
+                            <a href="feature.html" class="dropdown-item">Our features</a>
+                            <a href="team.html" class="dropdown-item">Team Members</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="quote.html" class="dropdown-item">Free Quote</a>
+                        </div>
+                    </div> -->
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <!-- <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton> -->
+                <!-- <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Download Pro Version</a> -->
+            </div>
+        </nav>
+
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Solutions</h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Full Screen Search Start -->
+    <!-- <div class="modal fade" id="searchModal">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="input-group" style="max-width: 600px;">
+                        <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
+                        <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Paste your HTML code here -->
+
+
+    <script>
+        var data = [{
+            slist: ['49, 100%, 54%', '33, 96%, 50%'],
+            icon: '🍊',
+            title: 'Local Area Networks',
+            ptext: 'To connect computers and related equipment within a building or campus to enable sharing of resources such as files and printers '
+        }, {
+            slist: ['82, 81%, 52%', '104, 56%, 51%'],
+            icon: '🍐',
+            title: 'Wide Area Networks',
+            ptext: 'This is to interlink computers and related equipment in geographically diverse locations,sometimes stretching across territorial boundaries.'
+        }, {
+            slist: ['169, 50%, 44%', '191, 99%, 27%'],
+            icon: '🍇',
+            title: 'Virtual Private Networks',
+            ptext: 'Secure networks for inter-branch connectivity '
+        }, {
+            slist: ['332, 94%, 67%', '338, 101%, 59%'],
+            icon: '🍓',
+            title: 'Virtual LAN’S',
+            ptext: 'Small grouping of network segments within one or more locations, operating as part of a Local Area Network(LAN)'
+        }, {
+            slist: ['49, 100%, 54%', '33, 96%, 50%'],
+            icon: '🍊',
+            title: 'Wireless LAN’S',
+            ptext: 'Local Area Network built using the wireless - radio technology.'
+        }, {
+            slist: ['82, 81%, 52%', '104, 56%, 51%'],
+            icon: '🍐',
+            title: 'Data Cabling',
+            ptext: 'Data and voice cabling using structured cabling'
+        }];
+
+        var n = data.length;
+
+        for (var i = 0; i < n; i++) {
+            var article = document.createElement('article');
+            article.setAttribute('data-icon', data[i].icon);
+            article.style.setProperty('--hsl0', data[i].slist[0]);
+            article.style.setProperty('--hsl1', data[i].slist[1]);
+            article.style.setProperty('--idx', i);
+            article.style.setProperty('--i', 'var(--wide, 1)');
+            article.style.setProperty('--j', 'calc(1 - var(--i))');
+            article.style.setProperty('--p', 'var(--parity, 1)');
+            article.style.setProperty('--q', 'calc(1 - var(--p))');
+            article.style.setProperty('--s', 'calc(1 - 2*var(--p))');
+
+            var h2 = document.createElement('h2');
+            h2.textContent = 'option';
+            h2.style.cssText = 'grid-row: 1/ calc(3 + 2*var(--i)); grid-column: calc(1 + 2*var(--i)*var(--p))/ span calc(1 + 2*var(--j)); align-items: center; justify-content: center; position: relative; z-index: 1; padding: calc(var(--i)*0.875em) calc(var(--i)*var(--q)*0.4375em - 0.2em*10em) 0 calc(var(--i)*var(--p)*0.4375em - 0.2em*10em); padding-top: 1em; color: #fff; font-size: $lvl-0-s; font-weight: 400; text-transform: uppercase;';
+
+            var h4 = document.createElement('h4');
+            h4.textContent = data[i].title;
+            h4.style.cssText = 'grid-row: 2/ 3; grid-column: calc(1 + var(--i))/ 3; align-self: self-end; color: HSL(var(--hsl1)); font-size: .75rem; margin-top:10px font-weight: 900; text-transform: uppercase;';
+
+            var h6 = document.createElement('h6');
+            h6.textContent = data[i].ptext;
+            h6.style.cssText = '--pv: 0.5em; grid-row: 3/4; grid-column: calc(1 + var(--i))/ calc(3 + var(--j)); padding: var(--pv, 0) calc(var(--i)*1.75rem + var(--j)*2.5vw); font-size: .8rem;'; // Adjust font size and width
+
+            article.appendChild(h2);
+            article.appendChild(h4);
+            article.appendChild(h6);
+
+            document.body.appendChild(article);
+        }
+    </script>
+    <div class="container-fluid py-5 wow fadeInUp " data-wow-delay="0.1s ">
+        <div class="container py-5 ">
+            <div class="row g-5 ">
+                <div class="col-lg-7 ">
+                    <div class="section-title position-relative pb-3 mb-5 ">
+                        <h1 class="mb-0 ">OUR VISION</h1>
+                    </div>
+                    <p class="mb-4 ">To be the number one World Class preferred I.T company in the provision of all Standard ICT products, services and solutions in the short and Long run by Developing Technical Depth, Enhancing resources reach and Infrastructure using
+                        the best management practices for operational excellence.</p>
+
+                    <div class="d-flex align-items-center mb-4 wow fadeIn " data-wow-delay="0.6s ">
+
+
+                    </div>
+                    <!-- <a href="quote.html " class="btn  py-3 px-5 mt-3 wow zoomIn " style="background-color: #00a69c; color: white;" data-wow-delay="0.9s ">Request A Quote</a> -->
+                </div>
+                <div class="col-lg-5 " style="min-height: 500px; ">
+                    <div class="position-relative h-100 ">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn " data-wow-delay="0.9s " src="img/vision.jpg " style="object-fit: cover; ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-5 wow fadeInUp " data-wow-delay="0.1s ">
+        <div class="container py-5 ">
+            <div class="row g-5 ">
+                <div class="col-lg-5 " style="min-height: 500px; ">
+                    <div class="position-relative h-100 ">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn " data-wow-delay="0.9s " src="img/mission.jpg " style="object-fit: cover; ">
+                    </div>
+                </div>
+                <div class="col-lg-7 ">
+                    <div class="section-title position-relative pb-3 mb-5 ">
+                        <h1 class="mb-0 ">MISSION</h1>
+                    </div>
+                    <p class="mb-4 ">To be the one-stop-efficient, most reliable and Standard point for your Information and Communications Technology requirements and needs by provision and integration of multivend or technologies and building innovative solutions around
+                        them
+                    </p>
+
+                    <div class="d-flex align-items-center mb-4 wow fadeIn " data-wow-delay="0.6s ">
+
+
+                    </div>
+                    <!-- <a href="quote.html " class="btn  py-3 px-5 mt-3 wow zoomIn " style="background-color: #00a69c; color: white;" data-wow-delay="0.9s ">Request A Quote</a> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- <div class="col-lg-4 col-md-6 footer-about">
+                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
+                        <a href="index.html" class="navbar-brand">
+                            <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
+                        </a>
+                        <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
+                                <button class="btn btn-dark">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div> -->
+    <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row gx-5">
+                <!-- <div class="col-lg-4 col-md-6 footer-about">
+                                <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
+                                    <a href="index.html" class="navbar-brand">
+                                        <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
+                                    </a>
+                                    <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
+                                    <form action="">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control border-white p-3" placeholder="Your Email">
+                                            <button class="btn btn-dark">Sign Up</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> -->
+                <div class="col-lg-12 col-md-6">
+                    <div class="row gx-5">
+                        <div class="col-lg-6 col-md-12 pt-5 mb-5">
+                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                                <h3 class="text-light mb-0">Get In Touch</h3>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <i class="bi bi-geo-alt  me-2" style="color: #00a69c;"></i>
+                                <p class="mb-0">Office 302,Al Rahma Pharmacy Building Street #5,Khalidiya,Abu Dhabi-U.A.E</p>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <i class="bi bi-envelope-open  me-2" style="color: #00a69c;"></i>
+                                <p class="mb-0">info@example.com</p>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <i class="bi bi-telephone  me-2" style="color: #00a69c;"></i>
+                                <p class="mb-0">+971 2 627 8677,+971 56 662 8275 </p>
+                            </div>
+                            <div class="d-flex mt-4">
+                                <a class="btn  btn-square me-2" href="#" style="background-color: #00a69c; color:white"><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn  btn-square me-2" href="#" style="background-color: #00a69c; color:white"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn  btn-square me-2" href="#" style="background-color: #00a69c; color:white"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                <a class="btn  btn-square" href="#" style="background-color: #00a69c; color:white"><i class="fab fa-instagram fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 pt-0 pt-lg-5 mb-5">
+                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                                <h3 class="text-light mb-0">Quick Links</h3>
+                            </div>
+                            <div class="link-animated d-flex flex-column justify-content-start">
+                                <a class="text-light mb-2" href="index.html"><i class="bi bi-arrow-right  me-2" style="color: #00a69c;"></i>Home</a>
+                                <a class="text-light mb-2" href="about.html"><i class="bi bi-arrow-right  me-2" style="color: #00a69c;"></i>About Us</a>
+                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right  me-2" style="color: #00a69c;"></i>Our Services</a>
+                                <a class="text-light mb-2" href="solution.html"><i class="bi bi-arrow-right  me-2" style="color: #00a69c;"></i>Solutions</a>
+
+                                <a class="text-light" href="contact.html"><i class="bi bi-arrow-right  me-2" style="color: #00a69c;"></i>Contact Us</a>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                                            <h3 class="text-light mb-0">Popular Links</h3>
+                                        </div>
+                                        <div class="link-animated d-flex flex-column justify-content-start">
+                                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+                                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+                                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
+                                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                                        </div>
+                                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-white" style="background: #061429;">
+        <div class="container text-center">
+            <div class="row justify-content-end">
+                <div class="col-lg-8 col-md-6">
+                    <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
+                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">RX and TX Network Solution LLC. All Rights Reserved.</a>
+
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg  btn-lg-square rounded back-to-top" style="background-color: #00a69c; color: white;"><i class="bi bi-arrow-up"></i></a>
+
+
+</body>
+
+</html>
